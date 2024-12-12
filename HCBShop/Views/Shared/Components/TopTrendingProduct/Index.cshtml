@@ -47,17 +47,17 @@
                             <div class="product product-2">
                                 <figure class="product-media">
                                     <span class="product-label label-circle label-top">Top</span>
-                                    <a href="product.html">
-                                        <img src="~/AccountPage/assets/images/demos/demo-3/products/product-7.jpg" alt="Product image" class="product-image">
+                                    <a href="/san-pham/@item.ProductName.ToLower().Replace(" ", "-").Replace(" đ", "d" ).Replace(" ", " -").Replace("--", "-" )">
+                                        <img src="~/AccountPage/assets/images/image-product/@item.ProductImage" alt="Product image" class="product-image">
                                     </a>
 
                                     <div class="product-action-vertical">
-                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Add to wishlist</span></a>
                                     </div><!-- End .product-action -->
 
                                     <div class="product-action product-action-dark">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                        <a asp-action="AddToCart" asp-controller="Cart" class="btn-product btn-cart" title="Add to cart"><span>Add to cart</span></a>
+                                        <a href="" class="btn-product btn-quickview" title="Quick view"><span>Quick view</span></a>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 

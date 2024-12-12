@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HCBShop.Data;
 using HCBShop.Models;
 using HCBShop.ViewModel;
+using HCBShop.Helpers;
 
 namespace HCBShop.Controllers
 {
@@ -20,6 +21,8 @@ namespace HCBShop.Controllers
             _context = context;
         }
 
+
+        
         // GET: Products
         public async Task<IActionResult> Index(int productpage = 1)
         {
@@ -39,16 +42,23 @@ namespace HCBShop.Controllers
         }
 
         // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string productName)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var product = await _context.Products
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+
+            //var product = await _context.Products
+            //    .Include(p => p.Category)
+            //    .FirstOrDefaultAsync(m => m.ProductId == id);
+            var product = _context.Products.FirstOrDefault(p => p.ProductName.ToLower().Replace(" ", "-")
+            .Replace("đ", "d")
+            .Replace(" ", "-")
+            .Replace("--", "-") == productName
+            .ToLower()
+            .Replace(" ", "-")
+            .Replace("đ", "d")
+            .Replace(" ", "-")
+            .Replace("--", "-"));
+
             if (product == null)
             {
                 return NotFound();

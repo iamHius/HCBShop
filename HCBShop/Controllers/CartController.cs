@@ -156,7 +156,7 @@ namespace HCBShop.Controllers
         [HttpPost("/Cart/create-paypal-order")]
         public async Task<IActionResult> CreatePaypalOrder(CancellationToken cancellationToken)
         {
-            //var tongTien = Cart.Sum(p => p.Total).ToString();
+            
             var tongTien = Cart.Any() ? Cart.Sum(p => p.Total).ToString("F2", CultureInfo.InvariantCulture) : "0.00";
 
             var donViTienTe = "USD";

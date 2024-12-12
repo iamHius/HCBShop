@@ -4,5 +4,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Success</h1>
+<main class="main">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Cart">Order</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Order Success</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="error-content text-center" style="background-image: url(assets/images/backgrounds/error-bg.jpg)">
+        <div class="container">
+            <h1 class="error-title">Order Successful</h1><!-- End .error-title -->
+            <p>
+                Thank you for ordering from us
+            </p>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary-2 btn-minwidth-lg">
+                <span>Back To Shop</span>
+                <i class="icon-long-arrow-right"></i>
+            </a>
+        </div><!-- End .container -->
+    </div><!-- End .error-content text-center -->
+</main><!-- End .main -->
 

@@ -97,8 +97,8 @@
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
                                             <span class="product-label label-new">New</span>
-                                            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.ProductId">
-                                                <img src="~/AccountPage/assets/images/products/product-4.jpg" alt="Product image" class="product-image">
+                                            <a href="/san-pham/@item.ProductName.ToLower().Replace(" ", "-").Replace(" đ", "d" ).Replace(" ", " -").Replace("--", "-" )">
+                                                <img src="~/AccountPage/assets/images/image-product/@item.ProductImage" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -129,14 +129,14 @@
 
                                             <div class="product-nav product-nav-thumbs">
                                                 <a href="#" class="active">
-                                                    <img src="~/AccountPage/assets/images/products/product-4-thumb.jpg" alt="product desc">
+                                                    <img src="~/AccountPage/assets/images/image-product/@item.ProductImage" alt="product desc">
                                                 </a>
                                                 <a href="#">
-                                                    <img src="~/AccountPage/assets/images/products/product-4-2-thumb.jpg" alt="product desc">
+                                                    <img src="~/AccountPage/assets/images/image-product/@item.ProductImage" alt="product desc">
                                                 </a>
 
                                                 <a href="#">
-                                                    <img src="~/AccountPage/assets/images/products/product-4-3-thumb.jpg" alt="product desc">
+                                                    <img src="~/AccountPage/assets/images/image-product/@item.ProductImage" alt="product desc">
                                                 </a>
                                             </div><!-- End .product-nav -->
                                         </div><!-- End .product-body -->
@@ -156,10 +156,11 @@
                                     <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
                                 </a>
                             </li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item-total">of 6</li>
+                            @for (int i = 1; i <= Model.PagingInfo.TotalPage; i++)
+                            {
+                                <li class="page-item active" aria-current="page"><a class="page-link" href="/Products/?productpage=@i">@i</a></li>
+                            }
+
                             <li class="page-item">
                                 <a class="page-link page-link-next" href="#" aria-label="Next">
                                     Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
