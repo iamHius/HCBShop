@@ -1,0 +1,21 @@
+﻿@model IEnumerable<HCBShop.Models.Category>
+
+
+<div class="header-left">
+    <div class="dropdown category-dropdown">
+        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
+            Categories <i class="icon-angle-down"></i>
+        </a>
+        <div class="dropdown-menu">
+            <nav class="side-nav">
+                <ul class="menu-vertical sf-arrows">
+                    @foreach(var item in Model)
+                    {
+                        <li class="item-lead"><a href="#">@item.CategoryName</a></li>
+                    }
+                    
+                </ul><!-- End .menu-vertical -->
+            </nav><!-- End .side-nav -->
+        </div><!-- End .dropdown-menu -->
+    </div><!-- End .category-dropdown -->
+</div><!-- End .header-left -->

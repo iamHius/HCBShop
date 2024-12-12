@@ -1,0 +1,12 @@
+﻿@model IEnumerable<HCBShop.Models.Category>
+
+<div class="heading-right">
+            <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                @foreach(var item in Model)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" id="trending-all-link" data-toggle="tab" href="#"  aria-controls="trending-all-tab" aria-selected="true">@item.CategoryName</a>
+                    </li>
+                }
+            </ul>
+        </div><!-- End .heading-right -->

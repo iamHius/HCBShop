@@ -1,0 +1,63 @@
+﻿@model IEnumerable<HCBShop.Models.Product>
+
+<div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel" aria-labelledby="products-featured-link">
+    <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl"
+         data-owl-options='{
+                                "nav": true,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "0": {
+                                        "items":2
+                                    },
+                                    "600": {
+                                        "items":2
+                                    },
+                                    "992": {
+                                        "items":3
+                                    },
+                                    "1200": {
+                                        "items":4
+                                    }
+                                }
+                            }'>
+        @foreach(var item in Model)
+        {
+            <div class="product product-2">
+                <figure class="product-media">
+                    <a href="product.html">
+                        <img src="~/AccountPage/assets/images/demos/demo-3/products/product-1.jpg" alt="Product image" class="product-image">
+                    </a>
+
+                    <div class="product-action-vertical">
+                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Add To Wishlist</span></a>
+                    </div><!-- End .product-action -->
+
+                    <div class="product-action product-action-dark">
+                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>Add To Cart</span></a>
+                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>View</span></a>
+                    </div><!-- End .product-action -->
+                </figure><!-- End .product-media -->
+
+                <div class="product-body">
+                    <div class="product-cat">
+                        <a href="#">Cameras & Camcorders</a>
+                    </div><!-- End .product-cat -->
+                    <h3 class="product-title"><a href="product.html">@item.ProductName</a></h3><!-- End .product-title -->
+                    <div class="product-price">
+                        @item.ProductPrice
+                    </div><!-- End .product-price -->
+                    <div class="ratings-container">
+                        <div class="ratings">
+                            <div class="ratings-val" style="width: 60%;"></div><!-- End .ratings-val -->
+                        </div><!-- End .ratings -->
+                        <span class="ratings-text">( 2 Reviews )</span>
+                    </div><!-- End .rating-container -->
+                </div><!-- End .product-body -->
+            </div>
+
+            <!-- End .product -->
+        }
+    </div><!-- End .owl-carousel -->
+</div><!-- .End .tab-pane -->

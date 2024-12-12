@@ -1,0 +1,20 @@
+﻿@model IEnumerable<HCBShop.Models.Product>
+
+<div class="container featured">
+    <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">Trending</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="products-sale-link" data-toggle="tab" href="#products-sale-tab" role="tab" aria-controls="products-sale-tab" aria-selected="false">On Sale</a>
+        </li>
+
+    </ul>
+
+    <div class="tab-content tab-content-carousel">
+        <div class="tab-content tab-content-carousel">
+            @await Component.InvokeAsync("ListTrendingFeatured")
+            @await Component.InvokeAsync("ListSaleFeatured")
+        </div><!-- End .tab-content -->
+    </div><!-- End .tab-content -->
+</div><!-- End .container -->

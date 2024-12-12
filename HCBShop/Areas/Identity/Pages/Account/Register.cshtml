@@ -1,0 +1,49 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Areas/Identity/Pages/_LayoutAuthen.cshtml";
+}
+
+
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <h2 class="justify-content-center">Register New Account</h2>
+    <hr />
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-floating mb-3">
+                <input asp-for="Input.FirstName" class="form-control" autocomplete="FirstName" aria-required="true" placeholder="FirstName" />
+                @* <label asp-for="Input.FirstName">FirstName</label> *@
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-floating mb-3">
+                <input asp-for="Input.LastName" class="form-control" autocomplete="LastName" aria-required="true" placeholder="LastName" />
+                @* <label asp-for="Input.LastName">LastName</label> *@
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+        @* <label asp-for="Input.Email">Email</label> *@
+        
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Input.Password" class="form-control" autocomplete="password" aria-required="true" placeholder="Test@123" />
+        @* <label asp-for="Input.Password">Password</label> *@
+
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="password" aria-required="true" placeholder="Test@123" />
+        @* <label asp-for="Input.ConfirmPassword">Confirm Password</label> *@
+
+    </div>
+    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
