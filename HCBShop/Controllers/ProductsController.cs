@@ -9,6 +9,7 @@ using HCBShop.Data;
 using HCBShop.Models;
 using HCBShop.ViewModel;
 using HCBShop.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HCBShop.Controllers
 {
@@ -22,8 +23,50 @@ namespace HCBShop.Controllers
         }
 
 
-        
+
+       
+        public async Task<IActionResult> Search(string keywords ,int productpage = 1)
+        {
+            
+            return View("Index", new ProductListViewModel
+            {
+                 Products = await _context.Products.Where(p => p.ProductName
+                 .Contains(keywords)).Skip((productpage - 1) * PageSize)
+                 .Take(PageSize)
+                 .ToListAsync(),
+                Categories = _context.Categories.ToList(),
+                PagingInfo = new PagingInfo
+                {
+                    ItemsPerPage = PageSize,
+                    CurrentPage = productpage,
+                    TotalItem = _context.Products.Count()
+                }
+            });
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ProductsByCat(int categoryId, int productpage = 1)
+        {
+            return View("Index", new ProductListViewModel
+            {
+                Products =  await _context.Products
+                .Where(p => p.CategoryId == categoryId)
+                .Include(p => p.Category)
+                .Skip((productpage - 1) * PageSize).Take(PageSize).ToListAsync(),
+                Categories = _context.Categories.ToList(),
+                PagingInfo = new PagingInfo
+                {
+                    ItemsPerPage = PageSize,
+                    CurrentPage = productpage,
+                    TotalItem = _context.Products.Count()
+                }
+
+            });
+        }
+
         // GET: Products
+        [Route("san-pham")]
         public async Task<IActionResult> Index(int productpage = 1)
         {
             //var applicationDbContext = _context.Products.Include(p => p.Category);
@@ -42,6 +85,7 @@ namespace HCBShop.Controllers
         }
 
         // GET: Products/Details/5
+        [Route("san-pham/{productName}")]
         public async Task<IActionResult> Details(string productName)
         {
 
@@ -69,6 +113,7 @@ namespace HCBShop.Controllers
         }
 
         // GET: Products/Create
+        [Authorize (Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
@@ -80,6 +125,7 @@ namespace HCBShop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProductDescription,ProductPrice,ProductQuantity,ProductImage,Trending,SecurityPolicy,DeliveryPolicy,Sale,CategoryId")] Product product)
         {
             if (ModelState.IsValid)
@@ -93,6 +139,7 @@ namespace HCBShop.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -114,6 +161,7 @@ namespace HCBShop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductDescription,ProductPrice,ProductQuantity,ProductImage,Trending,SecurityPolicy,DeliveryPolicy,Sale,CategoryId")] Product product)
         {
             if (id != product.ProductId)
@@ -146,6 +194,7 @@ namespace HCBShop.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -167,6 +216,7 @@ namespace HCBShop.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.FindAsync(id);

@@ -11,7 +11,7 @@
                 <ul class="menu-vertical sf-arrows">
                     @foreach(var item in Model)
                     {
-                        <li class="item-lead"><a href="#">@item.CategoryName</a></li>
+                        <li class="item-lead"><a href="/Products/ProductsByCat/?categoryId=@item.CategoryId">@item.CategoryName</a></li>
                     }
                     
                 </ul><!-- End .menu-vertical -->

@@ -13,8 +13,8 @@
 	<nav aria-label="breadcrumb" class="breadcrumb-nav">
 		<div class="container">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="/Index">Home</a></li>
-				<li class="breadcrumb-item"><a href="#">Shop</a></li>
+				<li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+				<li class="breadcrumb-item"><a asp-action="Index" asp-controller="Products">Shop</a></li>
 				<li class="breadcrumb-item active" aria-current="page">Checkout</li>
 			</ol>
 		</div><!-- End .container -->
@@ -23,12 +23,12 @@
 	<div class="page-content">
 		<div class="checkout">
 			<div class="container">
-				<div class="checkout-discount">
-					<form action="#">
-						<input type="text" class="form-control" required id="checkout-discount-input">
-						<label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
-					</form>
-				</div><!-- End .checkout-discount -->
+				@* <div class="checkout-discount"> *@
+				@* 	<form action="#"> *@
+				@* 		<input type="text" class="form-control" required id="checkout-discount-input"> *@
+				@* 		<label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label> *@
+				@* 	</form> *@
+				@* </div><!-- End .checkout-discount --> *@
 				<form asp-action="CheckOut">
 					<div class="row">
 						<div class="col-lg-9">
@@ -60,10 +60,10 @@
 								</div><!-- End .col-sm-6 -->
 							</div><!-- End .row -->
 
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-								<label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-							</div><!-- End .custom-checkbox -->
+							@* <div class="custom-control custom-checkbox"> *@
+							@* 	<input type="checkbox" class="custom-control-input" id="checkout-diff-address"> *@
+							@* 	<label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label> *@
+							@* </div><!-- End .custom-checkbox --> *@
 
 							<label>Order notes (optional)</label>
 							<textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery" name="Note"></textarea>
@@ -108,85 +108,9 @@
 										</tr><!-- End .summary-total -->
 									</tbody>
 								</table><!-- End .table table-summary -->
-
-								@* <div class="accordion-summary" id="accordion-payment"> *@
-								@* 	<div class="card"> *@
-								@* 		<div class="card-header" id="heading-1"> *@
-								@* 			<h2 class="card-title"> *@
-								@* 				<a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1"> *@
-								@* 					Direct bank transfer *@
-								@* 				</a> *@
-								@* 			</h2> *@
-								@* 		</div><!-- End .card-header --> *@
-								@* 		<div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-payment"> *@
-								@* 			<div class="card-body"> *@
-								@* 			</div><!-- End .card-body --> *@
-								@* 		</div><!-- End .collapse --> *@
-								@* 	</div><!-- End .card --> *@
-
-								@* 	<div class="card"> *@
-								@* 		<div class="card-header" id="heading-2"> *@
-								@* 			<h2 class="card-title"> *@
-								@* 				<a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2"> *@
-								@* 					Check payments *@
-								@* 				</a> *@
-								@* 			</h2> *@
-								@* 		</div><!-- End .card-header --> *@
-								@* 		<div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment"> *@
-								@* 			<div class="card-body"> *@
-								@* 			</div><!-- End .card-body --> *@
-								@* 		</div><!-- End .collapse --> *@
-								@* 	</div><!-- End .card --> *@
-
-								@* 	<div class="card"> *@
-								@* 		<div class="card-header" id="heading-3"> *@
-								@* 			<h2 class="card-title"> *@
-								@* 				<a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3"> *@
-								@* 					Cash on delivery *@
-								@* 				</a> *@
-								@* 			</h2> *@
-								@* 		</div><!-- End .card-header --> *@
-								@* 		<div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment"> *@
-								@* 			<div class="card-body"> *@
-								@* 			</div><!-- End .card-body --> *@
-								@* 		</div><!-- End .collapse --> *@
-								@* 	</div><!-- End .card --> *@
-
-								@* 	<div class="card"> *@
-								@* 		<div class="card-header" id="heading-4"> *@
-								@* 			<h2 class="card-title"> *@
-								@* 				<a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4"> *@
-								@* 					PayPal <small class="float-right paypal-link">What is PayPal?</small> *@
-													
-								@* 				</a> *@
-								@* 			</h2> *@
-								@* 		</div><!-- End .card-header --> *@
-								@* 		<div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment"> *@
-								@* 			<div class="card-body"> *@
-												
-								@* 			</div><!-- End .card-body --> *@
-								@* 		</div><!-- End .collapse --> *@
-								@* 	</div><!-- End .card --> *@
-
-								@* 	<div class="card"> *@
-								@* 		<div class="card-header" id="heading-5"> *@
-								@* 			<h2 class="card-title"> *@
-								@* 				<a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5"> *@
-								@* 					Credit Card (Stripe) *@
-								@* 					<img src="~/AccountPage/assets/images/payments-summary.png" alt="payments cards"> *@
-								@* 				</a> *@
-								@* 			</h2> *@
-								@* 		</div><!-- End .card-header --> *@
-								@* 		<div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#accordion-payment"> *@
-								@* 			<div class="card-body"> *@
-								@* 			</div><!-- End .card-body --> *@
-								@* 		</div><!-- End .collapse --> *@
-								@* 	</div><!-- End .card --> *@
-								@* </div><!-- End .accordion --> *@
-
 								<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-									<span class="btn-text">Place Order</span>
-									<span class="btn-hover-text">Checkout</span>
+									<span class="btn-text">Ship COD</span>
+									<span class="btn-hover-text">Order Now</span>
 								</button>
 								<div class="mt-2" id="paypal-button-container" style="max-width:1000px;"></div>
 							</div><!-- End .summary -->

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<HCBShop.Models.Bill>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<main class="main">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Cart">View Order</a></li>
+                <li class="breadcrumb-item active" aria-current="page">List Order</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+    <h1 class="row justify-content-center mt-5 mb-5">Lich su dat hang</h1>
+    <table class="table mx-auto" style="width:1350px; ">
+        <thead class="table-dark">
+            <tr>
+                <th class="row justify-content-center">
+                    Ngày đặt
+                </th>
+                <th class="justify-content-center">
+                    Ngày giao
+                </th>
+                <th class="justify-content-center">
+                    Số điện thoại
+                </th>
+                <th class="justify-content-center">
+                    Địa chỉ
+                </th>
+                <th class="justify-content-center">
+                    Phương thức thanh toán
+                </th>
+                <th class="justify-content-center">
+                    Trạng thái
+                </th>
+                <th class="justify-content-center">
+                    Thao tác
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-active">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="row justify-content-center">
+                        @Html.DisplayFor(modelItem => item.DateBooking)
+                    </td>
+                    <td class="justify-content-center">
+                        @Html.DisplayFor(modelItem => item.DateShip)
+                    </td>
+                    <td class="justify-content-center">
+                        @Html.DisplayFor(modelItem => item.UserPhone)
+                    </td>
+                    <td class="justify-content-center">
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td class="justify-content-center">
+                        @Html.DisplayFor(modelItem => item.PaymentMethod)
+                    </td>
+                    <td class="justify-content-center">
+                        @Html.DisplayFor(modelItem => item.StatusDelivery.StatusName)
+                    </td>
+                    <td class="justify-content-center">
+                        <a asp-action="Details" asp-route-id="@item.BillId">Chi tiết</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>
+

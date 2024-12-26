@@ -25,6 +25,7 @@ namespace HCBShop.Controllers
         }
         
         public List<CartItem> Cart => HttpContext.Session.Get<List<CartItem>>(Setting.Cart_Key) ?? new List<CartItem>();
+        [Route("gio-hang")]
         public IActionResult Index()
         {
             return View(Cart);

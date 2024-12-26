@@ -35,7 +35,7 @@
                     </div><!-- End .product-action -->
 
                     <div class="product-action product-action-dark">
-                        <a asp-action="AddToCart" asp-controller="Cart" class="btn-product btn-cart" title="Add to cart"><span>Add To Cart</span></a>
+                        <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ProductId" class="btn-product btn-cart" title="Add to cart"><span>Add To Cart</span></a>
                         <a href="#" class="btn-product btn-quickview" title="Quick view"><span>View</span></a>
                     </div><!-- End .product-action -->
                 </figure><!-- End .product-media -->
