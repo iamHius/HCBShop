@@ -230,12 +230,73 @@ HCBShop hân hạnh được phục vụ quý khách !
         [HttpPost("/Cart/capture-paypal-order")]
         public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
         {
+            //try
+            //{
+            //    var response = await _paypalClient.CaptureOrder(orderID);
+            //    return Ok(response);
+            //}
             try
             {
                 var response = await _paypalClient.CaptureOrder(orderID);
+                if (response != null && response.status == "COMPLETED")
+                {
+                    // Lấy thông tin người dùng hiện tại
+                    var currentUserId = _userManager.GetUserId(User);
+                    var UserCurrent = await _userManager.GetUserAsync(User);
+
+
+
+                    // Tạo đơn hàng
+                    var bill = new Bill
+                    {
+                        UserId = currentUserId,
+                        UserEmail = User.Identity?.Name,
+                        UserPhone = UserCurrent.Phone,
+                        Address = UserCurrent.Address,
+                        DateBooking = DateTime.Now,
+                        PaymentMethod = "PayPal",
+                        DeliveryMethod = "GHTK",
+                        StatusId = 1, // Status là "Đang xử lý"
+                        Note = "Thanh toán qua PayPal"
+                    };
+
+                    _context.Database.BeginTransaction();
+                    try
+                    {
+                        _context.Add(bill);
+                        _context.SaveChanges();
+
+                        // Lưu chi tiết đơn hàng
+                        var billDetails = Cart.Select(item => new BillDetails
+                        {
+                            BillId = bill.BillId,
+                            ProductId = item.Id,
+                            Quantity = item.Quantity,
+                            Price = item.Price,
+                            Discount = 0
+                        }).ToList();
+
+                        _context.AddRange(billDetails);
+                        _context.SaveChanges();
+
+                        // Xóa giỏ hàng
+                        HttpContext.Session.Set<List<CartItem>>(Setting.Cart_Key, new List<CartItem>());
+
+                        // Commit giao dịch
+                        _context.Database.CommitTransaction();
+
+                        // Trả về trang thành công
+                        return View("Success");
+                    }
+                    catch (Exception)
+                    {
+                        _context.Database.RollbackTransaction();
+                        throw;
+                    }
+                }
                 return Ok(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var error = new { ex.GetBaseException().Message };
                 return BadRequest(error);
@@ -252,7 +313,7 @@ HCBShop hân hạnh được phục vụ quý khách !
         }
 
         [Authorize]
-        public IActionResult PaymentCallBack()
+        public async Task<IActionResult> PaymentCallBackAsync()
         {
 
             var response = _vnPayservice.PaymentExecute(Request.Query);
@@ -263,9 +324,26 @@ HCBShop hân hạnh được phục vụ quý khách !
                 return RedirectToAction("PaymentFail");
             }
 
+            var CurrentUser = _userManager.GetUserId(User);
+            var UserCurrent = await _userManager.GetUserAsync(User);
+            var bill = new Bill
+            {
+                UserId = CurrentUser,
+                UserEmail = User.Identity?.Name,
+                UserPhone = UserCurrent.Phone,
+                Address = UserCurrent.Address,
+                DateBooking = DateTime.Now,
+                PaymentMethod = "VNPay",
+                DeliveryMethod = "GHTK",
+                StatusId = 2,
+                Note = "Thanh toán qua VNPAY"
 
-            // Lưu đơn hàng vô database
 
+            };
+            _context.Add(bill);
+            _context.SaveChanges();
+
+            HttpContext.Session.Set<List<CartItem>>(Setting.Cart_Key, new List<CartItem>());
             TempData["Message"] = $"Thanh toán VNPay thành công";
             return RedirectToAction("PaymentSuccess");
         }

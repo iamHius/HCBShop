@@ -16,5 +16,13 @@ public class ApplicationUser : IdentityUser
     [PersonalData]
     [Column(TypeName = "nvarchar(100)")]
     public string? LastName { get; set; }
+
+    [PersonalData]
+    [Column(TypeName = "nvarchar(100)")]
+    public string? Address { get; set; }
+
+    [PersonalData]
+    [Column(TypeName = "nvarchar(100)")]
+    public string? Phone { get; set; }
 }
 
