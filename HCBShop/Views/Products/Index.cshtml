@@ -54,7 +54,7 @@
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
                                             <span class="product-label label-new">New</span>
-                                            <a href="/san-pham/@item.ProductName.ToLower().Replace(" ", "-").Replace(" đ", "d" ).Replace(" ", " -").Replace("--", "-" )">
+                                            <a href="/san-pham/chi-tiet-sp/@item.ProductName.ToLower().Replace(" ", "-").Replace(" đ", "d" ).Replace(" ", " -").Replace("--", "-" )">
                                                 <img src="~/AccountPage/assets/images/image-product/@item.ProductImage" alt="Product image" class="product-image">
                                             </a>
 
@@ -75,7 +75,7 @@
                                             </div><!-- End .product-cat -->
                                             <h3 class="product-title"><a asp-action="Details" asp-controller="Products" asp-route-id="@item.ProductId">@item.ProductName</a></h3><!-- End .product-title -->
                                             <div class="product-price">
-                                                @item.ProductPrice
+                                                @item.ProductPrice.ToString("#,##0")
                                             </div><!-- End .product-price -->
                                             <div class="ratings-container">
                                                 <div class="ratings">

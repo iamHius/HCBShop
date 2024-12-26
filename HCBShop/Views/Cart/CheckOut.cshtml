@@ -23,12 +23,7 @@
 	<div class="page-content">
 		<div class="checkout">
 			<div class="container">
-				@* <div class="checkout-discount"> *@
-				@* 	<form action="#"> *@
-				@* 		<input type="text" class="form-control" required id="checkout-discount-input"> *@
-				@* 		<label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label> *@
-				@* 	</form> *@
-				@* </div><!-- End .checkout-discount --> *@
+				
 				<form asp-action="CheckOut">
 					<div class="row">
 						<div class="col-lg-9">
@@ -60,10 +55,7 @@
 								</div><!-- End .col-sm-6 -->
 							</div><!-- End .row -->
 
-							@* <div class="custom-control custom-checkbox"> *@
-							@* 	<input type="checkbox" class="custom-control-input" id="checkout-diff-address"> *@
-							@* 	<label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label> *@
-							@* </div><!-- End .custom-checkbox --> *@
+					
 
 							<label>Order notes (optional)</label>
 							<textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery" name="Note"></textarea>
@@ -85,33 +77,30 @@
 										@foreach(var item in Model)
 										{
 											<tr>
-												<td><a asp-action="Details" asp-controller="Products" asp-route-id="@item.Id">@item.Name</a></td>
+												<td><a href="/san-pham/chi-tiet-sp/@item.Name.ToLower().Replace(" ", "-").Replace(" đ", "d" ).Replace(" ", " -").Replace("--", "-" )">@item.Name</a></td>
 												<td>@item.Quantity</td>
-												<td>@item.Price</td>
+												<td>@item.Price.ToString("#,##0") VND</td>
 												
 											</tr>
 										}
 											<tr class="summary-subtotal">
 												<td>Subtotal:</td>
-												<td>@Model.Sum(p => p.Total)</td>
+											<td>@Model.Sum(p => p.Total).ToString("#,##0") VND</td>
 											</tr>
 
 											<!-- End .summary-subtotal -->
-										@* <tr> *@
-										@* 	<td>Shipping:</td> *@
-										@* 	<td>Free shipping</td> *@
-										@* </tr> *@
-										
 										<tr class="summary-total">
 											<td>Total:</td>
-											<td>@Model.Sum(p => p.Total).ToString("#,##0.00")</td>
+											<td>@Model.Sum(p => p.Total).ToString("#,##0") VND</td>
 										</tr><!-- End .summary-total -->
 									</tbody>
 								</table><!-- End .table table-summary -->
-								<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-									<span class="btn-text">Ship COD</span>
-									<span class="btn-hover-text">Order Now</span>
-								</button>
+								<input type="submit" name="payment" class="btn btn-outline-primary-2 btn-order btn-block" value="COD">
+
+								
+								<input type="submit" name="payment" class="btn btn-outline-primary-2 btn-order btn-block" value="VNPAY">
+
+								
 								<div class="mt-2" id="paypal-button-container" style="max-width:1000px;"></div>
 							</div><!-- End .summary -->
 						</aside><!-- End .col-lg-3 -->

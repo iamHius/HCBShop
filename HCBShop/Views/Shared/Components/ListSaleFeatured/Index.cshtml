@@ -26,7 +26,7 @@
         {
             <div class="product product-2">
                 <figure class="product-media">
-                    <a href="/san-pham/@item.ProductName.ToLower().Replace(" ", "-").Replace(" đ", "d" ).Replace(" ", " -").Replace("--", "-" )">
+                    <a href="/san-pham/chi-tiet-sp/@item.ProductName.ToLower().Replace(" ", "-").Replace(" đ", "d" ).Replace(" ", " -").Replace("--", "-" )">
                         <img src="~/AccountPage/assets/images/image-product/@item.ProductImage" alt="Product image" class="product-image">
                     </a>
 
@@ -46,7 +46,7 @@
                     </div><!-- End .product-cat -->
                     <h3 class="product-title"><a href="/san-pham/@item.ProductName">@item.ProductName</a></h3><!-- End .product-title -->
                     <div class="product-price">
-                        @item.ProductPrice
+                        @item.ProductPrice.ToString("#,##0")
                     </div><!-- End .product-price -->
                     <div class="ratings-container">
                         <div class="ratings">

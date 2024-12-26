@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using HCBShop.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Globalization;
+using HCBShop.Services;
 
 namespace HCBShop.Controllers
 {
@@ -15,13 +16,15 @@ namespace HCBShop.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly PaypalClient _paypalClient;
+        private readonly IVnPayService _vnPayservice;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CartController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, PaypalClient paypalClient)
+        public CartController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, PaypalClient paypalClient, IVnPayService vnPayservice)
         {
             _context = context;
             _userManager = userManager;
             _paypalClient = paypalClient;
+            _vnPayservice = vnPayservice;
         }
         
         public List<CartItem> Cart => HttpContext.Session.Get<List<CartItem>>(Setting.Cart_Key) ?? new List<CartItem>();
@@ -95,10 +98,28 @@ namespace HCBShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult CheckOut(CheckOutViewModel model)
+        public IActionResult CheckOut(CheckOutViewModel model, string payment = "COD")
         {
+
+
             if(ModelState.IsValid)
             {
+                if (payment == "VNPAY")
+                {
+                    var vnPayModel = new VnPaymentRequestModel
+                    {
+                        Amount = (decimal)Cart.Sum(p => Convert.ToDouble(p.Total)),
+                        CreatedDate = DateTime.Now,
+                        Description = $"{model.Note} {model.UserPhone}",
+                        FullName = model.UserEmail,
+                        OrderId = new Random().Next(1000, 100000)
+                    };
+                    return Redirect(_vnPayservice.CreatePaymentUrl(HttpContext, vnPayModel));
+                }
+
+
+
+
                 var CurrentUser = _userManager.GetUserId(User);
                 var bill = new Bill
                 {
@@ -192,5 +213,30 @@ namespace HCBShop.Controllers
 
         #endregion
 
+
+        [Authorize]
+        public IActionResult PaymentFail()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult PaymentCallBack()
+        {
+
+            var response = _vnPayservice.PaymentExecute(Request.Query);
+
+            if (response == null || response.VnPayResponseCode != "00")
+            {
+                TempData["Message"] = $"Lỗi thanh toán VN Pay: {response.VnPayResponseCode}";
+                return RedirectToAction("PaymentFail");
+            }
+
+
+            // Lưu đơn hàng vô database
+
+            TempData["Message"] = $"Thanh toán VNPay thành công";
+            return RedirectToAction("PaymentSuccess");
+        }
     }
 }

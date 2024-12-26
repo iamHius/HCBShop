@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using HCBShop.Data;
 using HCBShop.Areas.Identity.Data;
 using HCBShop.Helpers;
+using HCBShop.Services;
+using HCBShop.ViewModel;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
@@ -16,6 +18,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireUppercase = false;
 });
+
+builder.Services.AddScoped<EmailSender>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 6;
@@ -43,6 +47,8 @@ builder.Services.AddSingleton(x => new PaypalClient(
     builder.Configuration["PaypalOptions:Mode"]
 
 ));
+
+builder.Services.AddSingleton<IVnPayService, VnPayService>();
 
 var app = builder.Build();
 

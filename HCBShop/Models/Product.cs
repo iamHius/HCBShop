@@ -14,7 +14,7 @@ namespace HCBShop.Models
         [StringLength(300)]
         public string? ProductDescription { get; set; } = null;
         [Required]
-        [Column(TypeName = "decimal(8,3)")]
+        [Column(TypeName = "decimal(18,3)")]
         public decimal ProductPrice { get; set; }
         public int ProductQuantity { get; set; } = 1;
         public string? ProductImage { get; set; } = null;

@@ -85,7 +85,7 @@ namespace HCBShop.Controllers
         }
 
         // GET: Products/Details/5
-        [Route("san-pham/{productName}")]
+        [Route("san-pham/chi-tiet-sp/{productName}")]
         public async Task<IActionResult> Details(string productName)
         {
 
