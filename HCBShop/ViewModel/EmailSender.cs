@@ -16,12 +16,12 @@ namespace HCBShop.ViewModel
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("Email", "key google"),
+                Credentials = new NetworkCredential("2100006019@nttu.edu.vn", "vnmc ifoa bmyt xsal"),
                 EnableSsl = true
             };
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("Email"),
+                From = new MailAddress("2100006019@nttu.edu.vn"),
                 Subject = subject,
                 Body = body,
                 IsBodyHtml = true

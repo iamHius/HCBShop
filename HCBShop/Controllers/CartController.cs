@@ -8,6 +8,7 @@ using HCBShop.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Globalization;
 using HCBShop.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace HCBShop.Controllers
 {
@@ -17,14 +18,16 @@ namespace HCBShop.Controllers
         private readonly ApplicationDbContext _context;
         private readonly PaypalClient _paypalClient;
         private readonly IVnPayService _vnPayservice;
+        private readonly EmailSender _emailSender;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CartController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, PaypalClient paypalClient, IVnPayService vnPayservice)
+        public CartController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, PaypalClient paypalClient, IVnPayService vnPayservice, EmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
             _paypalClient = paypalClient;
             _vnPayservice = vnPayservice;
+            _emailSender = emailSender;
         }
         
         public List<CartItem> Cart => HttpContext.Session.Get<List<CartItem>>(Setting.Cart_Key) ?? new List<CartItem>();
@@ -140,7 +143,6 @@ namespace HCBShop.Controllers
                     _context.Database.CommitTransaction();
                     _context.Add(bill);
                     _context.SaveChanges();
-
                     var billdetails = new List<BillDetails>();
                     foreach(var item in Cart)
                     {
@@ -167,7 +169,36 @@ namespace HCBShop.Controllers
             
             return View(Cart);
         }
+        [HttpPost]
+        public IActionResult SendEmailMarketing(SendEmailViewModel model)
+        {
+            
+            var emailSubject = "Marketing";
+            var emailBody =
+                $@"  
+                        <h2>Xin chào quý khách hàng: {model.Email},</h2>
+                        <p>Chúng tôi rất phấn khích thông báo rằng chúng tôi đã cho ra mắt một sản phẩm mới tuyệt vời - Adidas Ultraboost 22!</p>
+                        <p>
+                            Adidas Ultraboost 22 là một [mô tả ngắn về sản phẩm]
+                            Chúng tôi tự tin rằng sản phẩm này sẽ làm bạn hài lòng và đáp ứng được nhu cầu của bạn. Đặc biệt, chúng tôi đã dành một ưu đãi đặc biệt cho những khách hàng đầu tiên:
+                            Giảm giá 20% trên Adidas Ultraboost 22
+                            Miễn phí vận chuyển cho đơn hàng từ 30.000 VND trở lên.
+                            Đừng bỏ lỡ cơ hội này! Nhấn vào nút dưới đây để xem chi tiết sản phẩm và đặt hàng ngay hôm nay.
+                            </p>
+                            <p>
+Nếu bạn cần thêm thông tin hoặc có bất kỳ câu hỏi nào, đừng ngần ngại liên hệ với chúng tôi qua Email HBCShop@gmail.com hoặc số điện thoại +123456789. Chúng tôi luôn sẵn sàng hỗ trợ bạn.
+</p>
+                            <p>
+Trân trọng,
+</p>
+                            <p>
+HCBShop hân hạnh được phục vụ quý khách !
+</p>
+                    ";
 
+            _emailSender.SendEmailAsync(model.Email, emailSubject, emailBody);
+            return View("Subcribe");
+        }
         public IActionResult PaymentSuccess()
         {
             return View("Success");
